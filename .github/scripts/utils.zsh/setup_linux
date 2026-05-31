@@ -30,6 +30,7 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
     libjansson-dev \
     libsimde-dev \
     uthash-dev \
+    libdrm-dev \
     libx11-xcb-dev \
     libgles2-mesa-dev \
     libwayland-dev \
