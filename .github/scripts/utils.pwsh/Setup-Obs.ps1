@@ -78,7 +78,7 @@ function Setup-Obs {
         }
 
         Invoke-External cmake --build plugin_build_${script:Target} @CmakeArgs -t obs-frontend-api
-        Invoke-External cmake --install plugin_build_${script:Target} @CmakeArgs --component obs_libraries
+        Invoke-External cmake --install plugin_build_${script:Target} @CmakeArgs --component Development
     }
     Pop-Location -Stack BuildTemp
 }
