@@ -182,8 +182,10 @@ void TextSlideshowDock::updateSources(obs_source_t *scene_source,
 	found_text_slideshows.ordered_slideshows = &text_slideshows;
 
 	scene = obs_scene_from_source(scene_source);
-	obs_scene_enum_items(scene, findTextSlideshowSources,
-			     &found_text_slideshows);
+	if (scene) {
+		obs_scene_enum_items(scene, findTextSlideshowSources,
+				     &found_text_slideshows);
+	}
 
 	active_slideshow->index = -1;
 
@@ -206,6 +208,11 @@ void TextSlideshowDock::updateTexts(QListWidget *textList,
 				    struct slideshow_t *active_slideshow)
 {
 	texts.clear();
+	if (!active_slideshow->source) {
+		textList->clear();
+		return;
+	}
+
 	proc_handler_t *handler =
 		obs_source_get_proc_handler(active_slideshow->source);
 	calldata_t cd = {0};
@@ -260,6 +267,9 @@ void TextSlideshowDock::previewTransition(QListWidgetItem *item)
 {
 	size_t index = ui->previewTextList->row(item);
 
+	if (!preview_active_slideshow.source)
+		return;
+
 	proc_handler_t *handler =
 		obs_source_get_proc_handler(preview_active_slideshow.source);
 	calldata_t cd = {0};
@@ -271,6 +281,9 @@ void TextSlideshowDock::previewTransition(QListWidgetItem *item)
 void TextSlideshowDock::programTransition(QListWidgetItem *item)
 {
 	size_t index = ui->programTextList->row(item);
+
+	if (!program_active_slideshow.source)
+		return;
 
 	proc_handler_t *handler =
 		obs_source_get_proc_handler(program_active_slideshow.source);
@@ -290,7 +303,7 @@ static void callback(void *data, calldata_t *cd)
 }
 
 TextSlideshowDock::TextSlideshowDock(QWidget *parent)
-	: QDockWidget(parent), ui(new Ui::TextSlideshowDock)
+	: QWidget(parent), ui(new Ui::TextSlideshowDock)
 {
 	ui->setupUi(this);
 	preview_active_slideshow.source = NULL;
@@ -317,8 +330,16 @@ TextSlideshowDock::TextSlideshowDock(QWidget *parent)
 		&TextSlideshowDock::programTransition);
 
 	obs_frontend_add_event_callback(OBSFrontendEventWrapper, this);
-
-	hide();
 }
 
-TextSlideshowDock::~TextSlideshowDock() {}
+TextSlideshowDock::~TextSlideshowDock()
+{
+	signal_handler_t *obs_handler = obs_get_signal_handler();
+	const char *source_signals[] = {"source_create", "source_destroy",
+					"source_rename", "source_save"};
+	for (int i = 0; i < 4; i++)
+		signal_handler_disconnect(obs_handler, source_signals[i],
+					  callback, this);
+
+	obs_frontend_remove_event_callback(OBSFrontendEventWrapper, this);
+}
