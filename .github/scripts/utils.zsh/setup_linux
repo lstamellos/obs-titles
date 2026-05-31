@@ -29,6 +29,7 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
     libswresample-dev libswscale-dev \
     libjansson-dev \
     libsimde-dev \
+    uthash-dev \
     libx11-xcb-dev \
     libgles2-mesa-dev \
     libwayland-dev \
