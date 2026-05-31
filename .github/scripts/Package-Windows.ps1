@@ -2,7 +2,7 @@
 param(
     [ValidateSet('Debug', 'RelWithDebInfo', 'Release', 'MinSizeRel')]
     [string] $Configuration = 'RelWithDebInfo',
-    [ValidateSet('x86', 'x64', 'x86+x64')]
+    [ValidateSet('x64')]
     [string] $Target,
     [switch] $BuildInstaller = $false
 )
@@ -57,17 +57,7 @@ function Package {
     Remove-Item @RemoveArgs
 
     if ( ( $BuildInstaller ) ) {
-        if ( $Target -eq 'x86+x64' ) {
-            $IsccCandidates = Get-ChildItem -Recurse -Path '*.iss'
-
-            if ( $IsccCandidates.length -gt 0 ) {
-                $IsccFile = $IsccCandidates[0].FullName
-            } else {
-                $IsccFile = ''
-            }
-        } else {
-            $IsccFile = "${ProjectRoot}/build_${Target}/installer-Windows.generated.iss"
-        }
+        $IsccFile = "${ProjectRoot}/build_${Target}/installer-Windows.generated.iss"
 
         if ( ! ( Test-Path -Path $IsccFile ) ) {
             throw 'InnoSetup install script not found. Run the build script or the CMake build and install procedures first.'

@@ -54,7 +54,7 @@ function Setup-Obs {
         $CmakeArgs = @(
             '-G', $CmakeGenerator
             "-DCMAKE_SYSTEM_VERSION=${script:PlatformSDK}"
-            "-DCMAKE_GENERATOR_PLATFORM=$(if (${script:Target} -eq "x86") { "Win32" } else { "x64" })"
+            "-DCMAKE_GENERATOR_PLATFORM=x64"
             "-DCMAKE_BUILD_TYPE=${script:Configuration}"
             "-DQT_VERSION=${script:QtVersion}"
             '-DENABLE_PLUGINS=OFF'
