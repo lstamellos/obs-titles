@@ -71,6 +71,12 @@ static const char *freetype2_getname(void *unused)
 	return obs_module_text("TextFreetype2Slideshow");
 }
 
+static const char *get_latest_input_id(const char *unversioned_id)
+{
+	const char *latest_id = obs_get_latest_input_type_id(unversioned_id);
+	return latest_id ? latest_id : unversioned_id;
+}
+
 static obs_source_t *create_freetype2(const char *file_path, const char *text,
 				      obs_data_t *text_ss_settings)
 {
@@ -100,7 +106,8 @@ static obs_source_t *create_freetype2(const char *file_path, const char *text,
 			  obs_data_get_bool(text_ss_settings, S_ANTIALIASING));
 	obs_data_set_string(settings, S_TEXT_FILE, file_path);
 	obs_data_set_string(settings, S_TEXT, text);
-	source = obs_source_create_private("text_ft2_source", text, settings);
+	source = obs_source_create_private(
+		get_latest_input_id("text_ft2_source"), text, settings);
 
 	obs_data_release(curr_font);
 	obs_data_release(settings);
@@ -265,6 +272,7 @@ void load_text_freetype2_slideshow()
 	info.video_tick = text_ss_video_tick;
 	info.video_render = text_ss_video_render;
 	info.enum_active_sources = text_ss_enum_sources;
+	info.enum_all_sources = text_ss_enum_all_sources;
 	info.audio_render = text_ss_audio_render;
 	info.media_play_pause = text_ss_play_pause;
 	info.media_restart = text_ss_restart;
