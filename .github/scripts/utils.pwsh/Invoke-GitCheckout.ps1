@@ -83,12 +83,21 @@ function Invoke-GitCheckout {
         }
 
         try {
+            Invoke-External git submodule deinit -f --all
+        } catch {
+            Write-Information 'Submodule deinit failed or no submodules were initialized; continuing cleanup.'
+        }
+        Invoke-External git reset --hard
+        Invoke-External git clean -ffdx
+
+        try {
             $null = Invoke-External git rev-parse -q --verify "${Commit}^{commit}"
         } catch {
             Invoke-External git fetch origin
         }
 
         Invoke-External git checkout -f $Commit -- | Log-Information
+        Invoke-External git clean -ffdx
     } else {
         Invoke-External git clone $Uri $Path
 
@@ -109,8 +118,8 @@ function Invoke-GitCheckout {
     Log-Information "Checked out commit ${Commit} on branch ${Branch}"
 
     if ( Test-Path ${Path}/.gitmodules ) {
-        Invoke-External git submodule foreach --recursive git submodule sync
-        Invoke-External git submodule update --init --recursive
+        Invoke-External git submodule sync --recursive
+        Invoke-External git submodule update --init --recursive --force
     }
 
     Pop-Location -Stack GitCheckoutTemp
