@@ -28,6 +28,7 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
     libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev \
     libswresample-dev libswscale-dev \
     libjansson-dev \
+    libsimde-dev \
     libx11-xcb-dev \
     libgles2-mesa-dev \
     libwayland-dev \
