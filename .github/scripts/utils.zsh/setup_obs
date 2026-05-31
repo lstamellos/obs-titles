@@ -51,9 +51,17 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]}) )) {
     git config remote.pluginbuild.url "${obs_repo:-https://github.com/obsproject/obs-studio.git}"
     git config remote.pluginbuild.fetch "+refs/heads/${obs_branch:-master}:refs/remotes/origin/${obs_branch:-master}"
 
+    # Moving between OBS versions can leave stale nested submodule worktrees
+    # behind. Clean them before checkout so a reused obs-studio directory does
+    # not fail with "git-submodule cannot be used without a working tree".
+    git submodule deinit -f --all || true
+    git reset --hard
+    git clean -ffdx
+
     git rev-parse -q --verify "${obs_hash}^{commit}" > /dev/null || git fetch pluginbuild
-    git checkout ${obs_branch:-master} -B ${product_name}
+    git checkout -f ${obs_branch:-master} -B ${product_name}
     git reset --hard "${obs_hash}"
+    git clean -ffdx
     log_status 'Found existing obs-studio repository.'
   } else {
     git clone "${obs_repo:-https://github.com/obsproject/obs-studio.git}" "${PWD}"
@@ -63,8 +71,8 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)unpack]}) )) {
     log_status 'obs-studio checked out.'
   }
 
-  git submodule foreach --recursive git submodule sync
-  git submodule update --init --recursive
+  git submodule sync --recursive
+  git submodule update --init --recursive --force
 }
 
 if (( ! (${skips[(Ie)all]} + ${skips[(Ie)build]}) )) {

@@ -4,7 +4,7 @@ param(
     [string] $Configuration = 'RelWithDebInfo',
     [ValidateSet('x86', 'x64')]
     [string] $Target,
-    [ValidateSet('Visual Studio 17 2022', 'Visual Studio 16 2019')]
+    [ValidateSet('Visual Studio 17 2022')]
     [string] $CMakeGenerator,
     [switch] $SkipAll,
     [switch] $SkipBuild,
