@@ -23,10 +23,12 @@ if (( ! (${skips[(Ie)all]} + ${skips[(Ie)deps]}) )) {
 
   sudo apt-get install -y \
     build-essential \
+    extra-cmake-modules \
     libcurl4-openssl-dev \
     libavcodec-dev libavdevice-dev libavfilter-dev libavformat-dev libavutil-dev \
     libswresample-dev libswscale-dev \
     libjansson-dev \
+    libsimde-dev \
     libx11-xcb-dev \
     libgles2-mesa-dev \
     libwayland-dev \
