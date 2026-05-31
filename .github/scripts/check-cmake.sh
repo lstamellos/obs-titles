@@ -29,7 +29,7 @@ elif [[ ${OS} = "Darwin" ]] ; then
     NPROC=$(sysctl -n hw.physicalcpu)
 fi
 
-# Discover clang-format
+# Discover cmake-format
 if ! type cmake-format 2> /dev/null ; then
     echo "Required cmake-format not found"
     exit 1
