@@ -10,16 +10,15 @@ AlignOperands: Align
 AlignTrailingComments:
   Kind: Always
   OverEmptyLines: 0
-#AllowAllArgumentsOnNextLine: false  # requires clang-format 9
-#AllowAllConstructorInitializersOnNextLine: false  # requires clang-format 9
+#AllowAllArgumentsOnNextLine: false
+#AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: Never
-#AllowShortLambdasOnASingleLine: Inline  # requires clang-format 9
+#AllowShortLambdasOnASingleLine: Inline
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
 BreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 BreakTemplateDeclarations: MultiLine
@@ -67,7 +66,7 @@ IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-#ObjCBinPackProtocolList: Auto  # requires clang-format 7
+#ObjCBinPackProtocolList: Auto
 ObjCBlockIndentWidth: 8
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: true
@@ -85,22 +84,22 @@ ReflowComments: false
 SortIncludes: false
 SortUsingDeclarations: false
 SpaceAfterCStyleCast: false
-#SpaceAfterLogicalNot: false  # requires clang-format 9
+#SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true
-#SpaceBeforeCtorInitializerColon: true  # requires clang-format 7
-#SpaceBeforeInheritanceColon: true  # requires clang-format 7
+#SpaceBeforeCtorInitializerColon: true
+#SpaceBeforeInheritanceColon: true
 SpaceBeforeParens: ControlStatements
-#SpaceBeforeRangeBasedForLoopColon: true  # requires clang-format 7
+#SpaceBeforeRangeBasedForLoopColon: true
 SpacesInParens: Never
 SpacesBeforeTrailingComments: 1
 SpacesInAngles: Never
 SpacesInContainerLiterals: false
 SpacesInSquareBrackets: false
-#StatementMacros:  # requires clang-format 8
+#StatementMacros:
 #  - 'Q_OBJECT'
 TabWidth: 8
-#TypenameMacros:  # requires clang-format 9
+#TypenameMacros:
 #  - 'DARRAY'
 UseTab: ForContinuationAndIndentation
 ---
