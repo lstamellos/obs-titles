@@ -699,7 +699,8 @@ static obs_source_t *get_transition(struct text_slideshow *text_ss)
 
 	pthread_mutex_lock(&text_ss->mutex);
 	tr = text_ss->transition;
-	obs_source_get_ref(tr);
+	if (tr)
+		obs_source_get_ref(tr);
 	pthread_mutex_unlock(&text_ss->mutex);
 
 	return tr;
@@ -903,6 +904,22 @@ void text_ss_enum_sources(void *data, obs_source_enum_proc_t cb, void *param)
 	pthread_mutex_lock(&text_ss->mutex);
 	if (text_ss->transition)
 		cb(text_ss->source, text_ss->transition, param);
+	pthread_mutex_unlock(&text_ss->mutex);
+}
+
+void text_ss_enum_all_sources(void *data, obs_source_enum_proc_t callback,
+			      void *param)
+{
+	struct text_slideshow *text_ss = (text_slideshow *)data;
+
+	pthread_mutex_lock(&text_ss->mutex);
+	for (size_t i = 0; i < text_ss->text_srcs.num; i++) {
+		obs_source_t *source = text_ss->text_srcs.array[i].source;
+		if (source)
+			callback(text_ss->source, source, param);
+	}
+	if (text_ss->transition)
+		callback(text_ss->source, text_ss->transition, param);
 	pthread_mutex_unlock(&text_ss->mutex);
 }
 

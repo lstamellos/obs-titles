@@ -25,19 +25,25 @@ elif [[ ${OS} = "Darwin" ]] ; then
     NPROC=$(sysctl -n hw.physicalcpu)
 fi
 
-# Discover clang-format
-if type clang-format-13 2> /dev/null ; then
-    CLANG_FORMAT=clang-format-13
-elif type clang-format 2> /dev/null ; then
-    # Clang format found, but need to check version
-    CLANG_FORMAT=clang-format
-    V=$(clang-format --version)
-    if [[ $V != *"version 13.0"* ]]; then
-        echo "clang-format is not 13.0 (returned ${V})"
+# Discover clang-format. Allow callers to set CLANG_FORMAT explicitly,
+# otherwise prefer the versioned clang-format-21 binary used by CI.
+if [[ -n "${CLANG_FORMAT:-}" ]]; then
+    if ! type "${CLANG_FORMAT}" 2> /dev/null ; then
+        echo "Configured clang-format not found: ${CLANG_FORMAT}"
         exit 1
     fi
+elif type clang-format-21 2> /dev/null ; then
+    CLANG_FORMAT=clang-format-21
+elif type clang-format 2> /dev/null ; then
+    CLANG_FORMAT=clang-format
 else
-    echo "No appropriate clang-format found (expected clang-format-13.0.0, or clang-format)"
+    echo "No appropriate clang-format found (expected clang-format-21, or clang-format version 21.x)"
+    exit 1
+fi
+
+V=$("${CLANG_FORMAT}" --version)
+if [[ $V != *"version 21."* ]]; then
+    echo "clang-format is not 21.x (returned ${V})"
     exit 1
 fi
 
