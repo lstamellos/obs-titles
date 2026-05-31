@@ -115,8 +115,14 @@ static const char *gdiplus_getname(void *unused)
 	return obs_module_text("TextGdiplusSlideshow");
 }
 
-#define obs_data_get_uint32 (uint32_t) obs_data_get_int
+#define obs_data_get_uint32 (uint32_t)obs_data_get_int
 #define obs_data_set_uint32 obs_data_set_int
+
+static const char *get_latest_input_id(const char *unversioned_id)
+{
+	const char *latest_id = obs_get_latest_input_type_id(unversioned_id);
+	return latest_id ? latest_id : unversioned_id;
+}
 
 static obs_source_t *create_gdiplus(const char *file_path, const char *text,
 				    obs_data_t *text_ss_settings)
@@ -185,7 +191,8 @@ static obs_source_t *create_gdiplus(const char *file_path, const char *text,
 	obs_data_set_uint32(settings, S_BKOPACITY,
 			    obs_data_get_uint32(text_ss_settings, S_BKOPACITY));
 
-	source = obs_source_create_private("text_gdiplus", text, settings);
+	source = obs_source_create_private(get_latest_input_id("text_gdiplus"),
+					   text, settings);
 
 	obs_data_release(curr_font);
 	obs_data_release(settings);
@@ -451,6 +458,7 @@ void load_text_gdiplus_slideshow()
 	info.video_tick = text_ss_video_tick;
 	info.video_render = text_ss_video_render;
 	info.enum_active_sources = text_ss_enum_sources;
+	info.enum_all_sources = text_ss_enum_all_sources;
 	info.audio_render = text_ss_audio_render;
 	info.media_play_pause = text_ss_play_pause;
 	info.media_restart = text_ss_restart;

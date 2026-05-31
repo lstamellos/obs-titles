@@ -19,7 +19,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #pragma once
 
 #include <obs-frontend-api.h>
-#include <QDockWidget>
+#include <QWidget>
 #include <memory>
 #include <vector>
 
@@ -32,7 +32,7 @@ struct slideshow_t {
 	int index;
 };
 
-class TextSlideshowDock : public QDockWidget {
+class TextSlideshowDock : public QWidget {
 	Q_OBJECT
 
 private:

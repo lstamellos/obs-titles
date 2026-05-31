@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>TextSlideshowDock</class>
- <widget class="QDockWidget" name="OBS Text Slide Show Dock">
+ <widget class="QWidget" name="TextSlideshowDock">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,70 +13,59 @@
   <property name="contextMenuPolicy">
    <enum>Qt::CustomContextMenu</enum>
   </property>
-  <property name="floating">
-   <bool>true</bool>
-  </property>
-  <property name="features">
-   <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable</set>
-  </property>
   <property name="windowTitle">
    <string>OBS Text Slide Show</string>
   </property>
-  <widget class="QWidget" name="dockWidgetContents">
-   <property name="contextMenuPolicy">
-    <enum>Qt::CustomContextMenu</enum>
+  <layout class="QVBoxLayout" name="verticalLayout_1">
+   <property name="spacing">
+    <number>0</number>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout_1">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <item>
-     <widget class="QTabWidget" name="tabWidget">
-      <property name="currentIndex">
-       <number>1</number>
-      </property>
-      <widget class="QWidget" name="previewTab">
-       <attribute name="title">
-        <string>Preview</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="previewLayout">
-        <item>
-         <widget class="QComboBox" name="previewSourceBox"/>
-        </item>
-        <item>
-         <widget class="QListWidget" name="previewTextList"/>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="programTab">
-       <attribute name="title">
-        <string>Program</string>
-       </attribute>
-       <layout class="QVBoxLayout" name="programLayout">
-        <item>
-         <widget class="QComboBox" name="programSourceBox"/>
-        </item>
-        <item>
-         <widget class="QListWidget" name="programTextList"/>
-        </item>
-       </layout>
-      </widget>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="previewTab">
+      <attribute name="title">
+       <string>Preview</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="previewLayout">
+       <item>
+        <widget class="QComboBox" name="previewSourceBox"/>
+       </item>
+       <item>
+        <widget class="QListWidget" name="previewTextList"/>
+       </item>
+      </layout>
      </widget>
-    </item>
-   </layout>
-  </widget>
+     <widget class="QWidget" name="programTab">
+      <attribute name="title">
+       <string>Program</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="programLayout">
+       <item>
+        <widget class="QComboBox" name="programSourceBox"/>
+       </item>
+       <item>
+        <widget class="QListWidget" name="programTextList"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
