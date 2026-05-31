@@ -54,7 +54,7 @@ function Setup-Obs {
         $CmakeArgs = @(
             '-G', $CmakeGenerator
             "-DCMAKE_SYSTEM_VERSION=${script:PlatformSDK}"
-            "-DCMAKE_GENERATOR_PLATFORM=$(if (${script:Target} -eq "x86") { "Win32" } else { "x64" })"
+            "-DCMAKE_GENERATOR_PLATFORM=x64"
             "-DCMAKE_BUILD_TYPE=${script:Configuration}"
             "-DQT_VERSION=${script:QtVersion}"
             '-DENABLE_PLUGINS=OFF'
@@ -78,7 +78,7 @@ function Setup-Obs {
         }
 
         Invoke-External cmake --build plugin_build_${script:Target} @CmakeArgs -t obs-frontend-api
-        Invoke-External cmake --install plugin_build_${script:Target} @CmakeArgs --component obs_libraries
+        Invoke-External cmake --install plugin_build_${script:Target} @CmakeArgs --component Development
     }
     Pop-Location -Stack BuildTemp
 }
